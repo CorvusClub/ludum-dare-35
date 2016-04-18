@@ -149,7 +149,8 @@ class Player extends Entity {
     
     jump()
     {
-        if(this.form=="rover" && this.onGround)
+        let groundDist = this.game.world.findFloor((this.x + this.width / 2)) - (this.y+this.height);
+        if(this.form=="rover" && (groundDist<=25&&groundDist>=-25) && !this.game.world.getPit((this.x + this.width / 2)))
         {
             this.velocity.y = -10;
             this.sounds.grind_launch.play();

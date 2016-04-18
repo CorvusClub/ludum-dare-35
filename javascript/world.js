@@ -36,6 +36,20 @@ class World {
         let floor = this.heightMap[Math.round(x)];
         return floor.y;
     }
+    
+    getPit(x)
+    {
+         x /= 4;
+        if(x < 0) {
+            x = 0;
+        }
+        else if(x >= this.heightMap.length) {
+            x = this.heightMap.length - 1;
+        }
+        let floor = this.heightMap[Math.round(x)];
+        return floor.pit;
+    }
+    
     checkForFloor(ent) {
         let floor = this.heightMap[Math.round((ent.x + ent.width / 2) / 4)];
         if(floor.pit) {
@@ -100,7 +114,7 @@ class World {
         if(this.pitCD <= 0) {
             last.pit = true;
             this.pitCD = 4500 + Math.random() * 1000;
-            this.pitLength = 300 + Math.random() * 1400 + Math.random() * 500 * this.game.player.speed / 1000;
+            this.pitLength = 300 + Math.random() * 1400 + Math.random() * 500 * this.game.player.speed / 250;
         }
         
         this.poleCD--;

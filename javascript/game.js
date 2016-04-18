@@ -14,15 +14,15 @@ class Game {
         this.input = new Input(this);
         
         this.roverboardTrack = new AudioManager(document.getElementById("roverboardTrack"), 9.9);
-        this.roverboardTrack.element.volume = 0.1;
+        this.roverboardTrack.element.volume = 0;
         this.hoverswordTrack = new AudioManager(document.getElementById("hoverswordTrack"), 9.9);
         this.hoverswordTrack.element.volume = 0.1;
+        this.menuTrack = new AudioManager(document.getElementById("menuTrack"), 0);
+        this.menuTrack.element.volume = 0.1;
         
         this.sounds = {};
         this.sounds.gameOver = new AudioManager(document.getElementById("bummer"));
         
-        
-        this.track = this.roverboardTrack;
         
         document.addEventListener("visibilitychange", () => {
             if(document.hidden) {
@@ -37,6 +37,9 @@ class Game {
         
         requestAnimationFrame(this.update.bind(this));
         this.started = false;
+        
+        this.menuTrack.play();
+        this.track = this.menuTrack;
     }
     reset() {
         this.entities = [];
@@ -52,7 +55,10 @@ class Game {
         if(this.startTween) {
             return;
         }
+        new TWEEN.Tween(this.menuTrack.element).to({volume: 0}, 2000).start();
+        new TWEEN.Tween(this.roverboardTrack.element).to({volume: 0.1}, 2000).start();
         this.roverboardTrack.play();
+        this.track = this.roverboardTrack;
         this.startTween = new TWEEN.Tween(this)
             .to({introPos: this.renderer.canvas.width}, 4000)
             .onComplete(() => {
@@ -66,7 +72,6 @@ class Game {
         if(this.dying) {
             return;
         }
-        
         
         
         if(!this.lastTime) {
@@ -100,7 +105,6 @@ class Game {
             this.dying = true;
             this.sounds.gameOver.play();
             setTimeout(() => {
-                this.renderer.updateHighScore();
                 this.reset();
             }, 2000);
         }

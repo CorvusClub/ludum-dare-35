@@ -11,7 +11,7 @@ class Renderer {
         this.score.classList.add("score");
         this.score.textContent = 'Score: 0';
         
-        this.highScore = "0"| localStorage.getItem("highScore");
+        this.highScore = "0" || localStorage.getItem("highScore");
         this.highScoreSpan = document.createElement("span");
         this.highScoreSpan.classList.add("ui");
         this.highScoreSpan.classList.add("highScore");
@@ -108,6 +108,7 @@ class Renderer {
         
         var scoreInt = parseInt((this.game.world.xPos/100).toFixed(0));
         this.score.textContent = "Score: " + scoreInt.toLocaleString();
+        this.updateHighScore();
         this.highScoreSpan.textContent = "High Score: " + this.highScore.toLocaleString();
         
         this.camera.transform();
