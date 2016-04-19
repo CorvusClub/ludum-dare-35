@@ -40,6 +40,8 @@ class Input {
         }
         
         //console.log(event.code);
+        event.preventDefault();
+        return false;
     }
     
     onKeyUp(event)
@@ -61,6 +63,8 @@ class Input {
         }
         
         //console.log(event.code);
+        event.preventDefault();
+        return false;
     }
     
     onMouseMove(event) 
